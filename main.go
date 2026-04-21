@@ -46,8 +46,15 @@ func main(){
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 
+	fileserver := http.FileServer(http.Dir("static"))
+	r.Handle("/static/*", http.StripPrefix("/static/", fileserver))
+
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		Templates.ExecuteTemplate(w, "index.html", nil)
+	})
+	r.Get("/shorten/", GetAllShortLinks(db))
 	r.Post("/shorten", SaveShortLink(db))
-	r.Get("/shorten/{id}", GetShortLink(db))
+	r.Get("/shorten/{id}", GetOneShortLinkByID(db))
 	r.Delete("/shorten/{id}", DeleteShortLink(db))
 	r.Put("/shorten/{id}", UpdateShortLink(db))
 

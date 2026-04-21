@@ -2,9 +2,7 @@ package main
 
 import (
 	"database/sql"
-	"encoding/json"
 	"fmt"
-	"html/template"
 	"log"
 	"net/http"
 	"strings"
@@ -17,7 +15,7 @@ type ShortLink struct {
 	CreatedAt string		`json:"created_at"`
 }
 
-var templates = template.Must(template.ParseFiles("index.html"))
+
 // func ViewOneLinkHandler(w http.ResponseWriter, r *http.Request) {
 // 	url := r.URL
 // 	fmt.Println(url)
@@ -43,12 +41,36 @@ func SaveShortLink(db *sql.DB) http.HandlerFunc {
 			log.Fatal(err)
 		}
 	
-		w.WriteHeader(http.StatusCreated)
-
+		// w.WriteHeader(http.StatusCreated)
+		RenderOneTemplate(w, "view", *shortUrl)
+		// http.Redirect(w, r, "/shorten/", http.StatusCreated)
 	}
 }
 
-func GetShortLink(db *sql.DB) http.HandlerFunc{
+func GetAllShortLinks(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		rows, err := db.Query("Select * From shortlink")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		defer rows.Close()
+
+		var links []ShortLink
+
+		for rows.Next() {
+			var sl ShortLink
+			if err := rows.Scan(&sl.ID, &sl.URL, &sl.ShortCode, &sl.CreatedAt); err != nil {
+				log.Fatal(err)
+			}
+			links = append(links, sl)
+		}
+
+		RenderTemplate(w, "viewall", &links)
+	}
+}
+
+func GetOneShortLinkByID(db *sql.DB) http.HandlerFunc{
 	return func(w http.ResponseWriter, r *http.Request) {
 		id := strings.TrimPrefix(r.URL.Path, "/shorten/")
 		fmt.Println(id)
@@ -68,8 +90,9 @@ func GetShortLink(db *sql.DB) http.HandlerFunc{
 			links = append(links, sl)
 		}
 		// w.WriteHeader(http.StatusOK)
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(links)
+		// w.Header().Set("Content-Type", "application/json")
+		// json.NewEncoder(w).Encode(links)
+		RenderOneTemplate(w, "view", links[0])
 	}
 }
 
@@ -97,3 +120,4 @@ func UpdateShortLink(db *sql.DB) http.HandlerFunc {
 		w.WriteHeader(http.StatusOK)
 	}
 }
+

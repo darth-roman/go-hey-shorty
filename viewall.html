@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hey Shorty | All</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+
+    <header>
+        <ul>
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/shorten/">All Links</a>
+            </li>
+        </ul>
+    </header>
+    <h1>All Links</h1>
+
+    <div id="links-container">
+        {{range $index, $element := .}}
+        <div class="link">
+            <a href="/shorten/{{$element.ID}}" target="_blank">{{$element.ShortCode}}</a>
+            <a href="{{$element.URL}}" target="_blank">Long URL</a>
+            <small>{{$element.CreatedAt}}</small>
+        </div>
+        {{end}}
+    </div>
+
+</body>
+</html>
