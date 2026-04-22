@@ -58,7 +58,8 @@ func main(){
 	r.Delete("/shorten/{id}", DeleteShortLink(db))
 	r.Put("/shorten/{id}", UpdateShortLink(db))
 
-	http.ListenAndServe(":3000", r)
+	var port string = fmt.Sprintf("%s", os.Getenv("PORT"))
+	http.ListenAndServe(port, r)
 
 }
 

@@ -26,9 +26,12 @@
             <a href="/shorten/{{$element.ID}}" target="_blank">{{$element.ShortCode}}</a>
             <a href="{{$element.URL}}" target="_blank">Long URL</a>
             <small>{{$element.CreatedAt}}</small>
+            <a href="{{$element.URL}}" target="_blank" class="btn-delete" data-id="{{$element.ID}}">[Delete]</a>
         </div>
         {{end}}
     </div>
+
+    <script src="../static/main.js"></script>
 
 </body>
 </html>
