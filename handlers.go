@@ -121,3 +121,27 @@ func UpdateShortLink(db *sql.DB) http.HandlerFunc {
 	}
 }
 
+func GetShortLinkByShortCode(db *sql.DB) http.HandlerFunc{
+	return func(w http.ResponseWriter, r *http.Request) {
+		 shortCode := strings.TrimPrefix(r.URL.Path ,"/")
+		 fmt.Println(shortCode)
+		 rows, err := db.Query("Select * From shortlink Where shortcode like ?", shortCode)
+		 if err != nil {
+			log.Fatal(err)
+		 }
+
+		 defer rows.Close()
+
+		 var links []ShortLink 
+		 for rows.Next() {
+			var sl ShortLink
+			if err := rows.Scan(&sl.ID, &sl.URL, &sl.ShortCode, &sl.CreatedAt); err != nil {
+				log.Fatal(err)
+			}
+
+			links = append(links, sl)
+		 }
+
+		 http.Redirect(w, r, links[0].URL, http.StatusTemporaryRedirect)
+	}
+}

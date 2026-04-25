@@ -23,7 +23,7 @@
     <div id="links-container">
         {{range $index, $element := .}}
         <div class="link">
-            <a href="/shorten/{{$element.ID}}" target="_blank">{{$element.ShortCode}}</a>
+            <a href="/{{$element.ShortCode}}" target="_blank">{{$element.ShortCode}}</a>
             <a href="{{$element.URL}}" target="_blank">Long URL</a>
             <small>{{$element.CreatedAt}}</small>
             <a href="{{$element.URL}}" target="_blank" class="btn-delete" data-id="{{$element.ID}}">[Delete]</a>
