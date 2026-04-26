@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 history.go(0)
 
-            }, 1500)
+            }, 1000)
 
         })
     })

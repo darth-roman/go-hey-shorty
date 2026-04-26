@@ -52,10 +52,10 @@ func main(){
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		Templates.ExecuteTemplate(w, "index.html", nil)
 	})
-	r.Get("/{id}", GetShortLinkByShortCode(db))
-	r.Get("/shorten/", GetAllShortLinks(db))
-	r.Get("/shorten/{id}", GetOneShortLinkByID(db))
 	r.Post("/shorten", SaveShortLink(db))
+	r.Get("/shorten", GetAllShortLinks(db))
+	r.Get("/{id}", GetShortLinkByShortCode(db))
+	r.Get("/shorten/{id}", GetOneShortLinkByID(db))
 	r.Delete("/shorten/{id}", DeleteShortLink(db))
 	r.Put("/shorten/{id}", UpdateShortLink(db))
 

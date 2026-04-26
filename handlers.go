@@ -42,14 +42,14 @@ func SaveShortLink(db *sql.DB) http.HandlerFunc {
 		}
 	
 		// w.WriteHeader(http.StatusCreated)
-		RenderOneTemplate(w, "view", *shortUrl)
-		// http.Redirect(w, r, "/shorten/", http.StatusCreated)
+		// RenderOneTemplate(w, "viewall", *shortUrl)
+		http.Redirect(w, r, "/shorten", http.StatusSeeOther)
 	}
 }
 
 func GetAllShortLinks(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		rows, err := db.Query("Select * From shortlink")
+		rows, err := db.Query("Select * From shortlink Order By created_at desc")
 		if err != nil {
 			log.Fatal(err)
 		}
