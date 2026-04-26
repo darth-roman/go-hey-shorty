@@ -4,18 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hey Shorty | Home</title>
+    <link rel="shortcut icon" href="beaubus_red_zig_zag_pattern.svg" type="image/x-icon">
     <link rel="stylesheet" href="static/style.css">
+    <script src="https://kit.fontawesome.com/33086c4c35.js" crossorigin="anonymous" defer></script>
 </head>
 <body>
     <header>
-        <ul>
-            <li>
-                <a href="/">Home</a>
-            </li>
-            <li>
-                <a href="/shorten/">All Links</a>
-            </li>
-        </ul>
+        <div id="logo">
+            <h2>HeyShorty!</h2>
+        </div>
+        <div id="nav">
+            <ul>
+                <li><a href="#">Sign-in</a></li>
+                <li><a href="#">Sign-up</a></li>
+            </ul>
+        </div>
     </header>
     <h1>Hey Shorty!!!</h1>
     <form action="/shorten" method="post">
@@ -23,7 +26,7 @@
             <label for="url">Long URL</label>
             <input type="text" name="url" id="url">
         </div>
-        <button type="submit">Shorten-me</button>
+        <button type="submit">Shorten</button>
     </form>
 </body>
 </html>

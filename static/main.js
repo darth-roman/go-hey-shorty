@@ -4,9 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     deleteLinks.forEach(link => {
         link.addEventListener("click", async (e) => {
             e.preventDefault()
-            let shortLinkID = e.target.dataset.id
-            // console.log(e.target.dataset.id);
-            await fetch(`/shorten/${shortLinkID}`, {
+            // Use currentTarget to get the <a> element, not the clicked child (<i>)
+            await fetch(`${e.currentTarget.href}`, {
                 method: "DELETE"
             })
 

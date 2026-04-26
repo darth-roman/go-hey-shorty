@@ -8,25 +8,30 @@
     font-family: "Arvo", serif;
 
     color: var(--txt-light);
+
+    text-decoration: none;
 }
 
 :root{
-    --bg-link: hsl(210, 92%, 20%);
+    --bg-link: hsl(209, 35%, 14%);
     --border-color: hsl(210, 83%, 66%);
     --yellow: hsl(52, 96%, 67%);
     --bx-shadow: 0 0.3rem var(--yellow);
     --bg-dark: hsl(240, 8%, 5%);
     --txt-light: hsl(0, 0%, 88%);
+    --txt-gray: hsl(0, 0%, 65%);
 
     --btn-primary: hsl(298, 98%, 18%);
-    --btn-delete: hsl(0, 96%, 33%);
+    --btn-delete: hsl(0, 87%, 36%);
 }
 
 header {
     width: 100%;
-    padding: 1rem;
+    padding: 2rem 4rem ;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 2rem 0;
     ul{
         display: flex;
         list-style: none;
@@ -34,14 +39,15 @@ header {
     }
 
     a{
+        font-size: 1.2rem;
         &:hover{
             color: var(--yellow);
         }
     }
 
-    margin: 0 0 2rem 0;
-
-    background-color: var(--btn-primary);
+    h2{
+        color: var(--yellow);
+    }
 }
 
 
@@ -50,16 +56,18 @@ body{
     width: 100vw;
     max-width: 100%;
 
-    background-color: var(--bg-dark);
+    background-image: url(beaubus_red_zig_zag_pattern.svg);
+
     color: var(--txt-light);
 
     display: flex;
     flex-direction: column;
     align-items: center;
 
+
     /* padding: 2rem; */
 
-    .btn-delete{
+    /* .btn-delete{
         padding: 0.3rem 0.3rem;
         background-color: var(--btn-delete);
         color: var(--txt-light);
@@ -75,13 +83,13 @@ body{
             border: 1px solid var(--txt-light);
     
         }
-    }
+    } */
 }
 
 form {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: end;
+    justify-content: flex-end;
     gap: 0.5rem;
 
     width: 60%;
@@ -90,25 +98,29 @@ form {
         display: flex;
         flex-direction: column;
         align-items: start;
-
+        justify-content: end;
         gap: 0.5rem;
 
         width: 100%;
         input{
             width: 100%;
+            border: 0rem;
 
-            padding: 0.5rem;
+            padding: 0.7rem;
 
             color: var(--bg-dark);
         }
     }
 
     button{
-        padding: 0.5rem 0.5rem;
+        padding: 0.6rem;
+        width: 10rem;
+        /* padding: 0.9rem 0.5rem; */
         background-color: var(--btn-primary);
         color: var(--txt-light);
 
-        border: 1px solid var(--txt-light);
+        border: 0.1rem solid var(--txt-light);
+        /* border: 0rem; */
 
         transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
@@ -116,7 +128,8 @@ form {
             background-color: var(--txt-light);
             color: var(--btn-primary);
 
-            border: 1px solid var(--txt-light);
+            border: 0.1rem solid var(--txt-light);
+            /* border: 0rem; */
     
         }
     }
@@ -136,6 +149,7 @@ form {
     display: flex;
     flex-direction: column;
     align-items: start;
+    gap: 0.7rem;
 
     background-color: var(--bg-link);
 
@@ -152,5 +166,27 @@ form {
         color: var(--yellow);
     }
 
+    .dets{
+        width: 100%;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+
+        a i {
+            font-size: 1.2rem;
+            color: var(--btn-delete);
+        }
+        small{
+            font-size: 1rem;
+            color: var(--txt-gray);
+        }
+    }
+    .in-link {
+        text-decoration: none;
+        transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+        &:hover{
+            text-decoration: underline;
+        }
+    }
     
 }

@@ -5,33 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hey Shorty | All</title>
     <link rel="stylesheet" href="../static/style.css">
+    <script src="https://kit.fontawesome.com/33086c4c35.js" crossorigin="anonymous" defer></script>
+
 </head>
 <body>
 
-    <header>
-        <ul>
-            <li>
-                <a href="/">Home</a>
-            </li>
-            <li>
-                <a href="/shorten/">All Links</a>
-            </li>
-        </ul>
+     <header>
+        <div id="logo">
+            <h2>HeyShorty!</h2>
+        </div>
+        <div id="nav">
+            <ul>
+                <li><a href="#">Sign-in</a></li>
+                <li><a href="#">Sign-up</a></li>
+            </ul>
+        </div>
     </header>
-    <h1>All Links</h1>
+
+    <h1>All Shorties</h1>
 
     <div id="links-container">
         {{range $index, $element := .}}
         <div class="link">
-            <a href="/{{$element.ShortCode}}" target="_blank">{{$element.ShortCode}}</a>
-            <a href="{{$element.URL}}" target="_blank">Long URL</a>
+            <div class="dets">
+                <a href="/{{$element.ShortCode}}" target="_blank" class="in-link"><small>rom.an/</small>{{$element.ShortCode}}</a>
+                <a href="/shorten/{{$element.ID}}" target="_blank" class="btn-delete" data-id="{{$element.ID}}">
+                    <i class="fa-solid fa-link-slash"></i>
+                </a>
+            </div>
+            <!-- <a href="{{$element.URL}}" target="_blank">{{$element.URL}}</a> -->
             <small>{{$element.CreatedAt}}</small>
-            <a href="{{$element.URL}}" target="_blank" class="btn-delete" data-id="{{$element.ID}}">[Delete]</a>
         </div>
         {{end}}
     </div>
 
-    <script src="../static/main.js"></script>
+    <script src="../static/main.js" defer></script>
 
 </body>
 </html>
