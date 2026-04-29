@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -15,6 +16,10 @@ type ShortLink struct {
 	CreatedAt string		`json:"created_at"`
 }
 
+type ShortLinkResponse struct {
+	ShortCode string 		`json:"shortcode"`
+	ShortLink string		`json:"shortlink"`
+}
 
 // func ViewOneLinkHandler(w http.ResponseWriter, r *http.Request) {
 // 	url := r.URL
@@ -25,6 +30,40 @@ type ShortLink struct {
 // 		http.Error(w, err.Error(), http.StatusInternalServerError)
 // 	}
 // }
+
+func CreateShortLink(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		url := r.FormValue("url")
+		shortCode := GenerateRandomLinkCode(6)
+		
+		shortUrl := &ShortLink{
+			URL: url,
+			ShortCode: shortCode,
+		}
+	
+		_, err := db.Exec("Insert Into shortlink (url, shortcode) values (?, ?)", shortUrl.URL, shortUrl.ShortCode)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		link := fmt.Sprintf("https://rom.an/%s", shortUrl.ShortCode)
+		slResp := &ShortLinkResponse{
+			ShortCode: shortUrl.ShortCode,
+			ShortLink: link,
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+
+		if err := json.NewEncoder(w).Encode(slResp); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+	
+		// w.WriteHeader(http.StatusCreated)
+		// RenderOneTemplate(w, "viewall", *shortUrl)
+		// http.Redirect(w, r, "/shorten", http.StatusSeeOther)
+	}
+}
+
 
 func SaveShortLink(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
